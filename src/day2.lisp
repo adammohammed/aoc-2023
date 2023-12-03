@@ -9,6 +9,11 @@
 			    (if (valid-game? draws)
 				id
 				0))) lines))))
+(defun day02b (input)
+  (let ((lines (split-input input)))
+    (reduce #'+ (mapcar (lambda (line)
+			  (let ((draws (parse-draws line)))
+			    (find-power draws))) lines))))
 
 (defun parse-game-id (line)
   (let ((gamestr (first (str:split #\: line))))
@@ -49,3 +54,26 @@
 
 (defun all? (xs)
   (reduce (lambda (x y) (and x y)) xs))
+
+(defun find-power (rounds)
+  (let ((maxred (max-color rounds "red"))
+	(maxgreen (max-color rounds "green"))
+	(maxblue (max-color rounds "blue")))
+    (* maxred maxblue maxgreen)))
+
+(defun max-color (rounds color)
+  (reduce #'max
+	  (flatten (mapcar (lambda (round)
+			     (mapcar (lambda (p)
+				       (let ((count (car p))
+					     (cube-color (cdr p)))
+					 (if (string= cube-color color)
+					     count
+					     0)))
+				     round))
+			   rounds))))
+
+(defun flatten (l)
+  (cond ((null l) nil)
+	((atom l) (list l))
+	(t (loop for n in l appending (flatten n)))))
