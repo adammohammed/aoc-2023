@@ -4,9 +4,6 @@
 (in-package :aoc23)
 
 (defvar numberwords '(
-		      ;; do double digits first
-		      ;; since they have substrings that match the
-		      ;; singledigits
 		      ("zero"   . "z0o")
 		      ("one"   . "o1e")
 		      ("two"   . "t2o")
@@ -17,7 +14,6 @@
 		      ("seven" . "s7n")
 		      ("eight" . "e8t")
 		      ("nine"  . "n9e")
-		      ("ten"  . "t10n")
 		      ))
 
 (defun day01a (input)
