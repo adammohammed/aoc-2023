@@ -63,15 +63,17 @@
 
 (defun max-color (rounds color)
   (reduce #'max
-	  (flatten (mapcar (lambda (round)
-			     (mapcar (lambda (p)
-				       (let ((count (car p))
-					     (cube-color (cdr p)))
-					 (if (string= cube-color color)
-					     count
-					     0)))
-				     round))
-			   rounds))))
+	  (flatten
+	   (mapcar (lambda (round)
+		     (count-color-in-round round color)) rounds))))
+(defun count-color-in-round (round color)
+  (mapcar (lambda (p)
+	    (let ((count (car p))
+		  (cube-color (cdr p)))
+	      (if (string= cube-color color)
+		  count
+		  0)))
+	  round))
 
 (defun flatten (l)
   (cond ((null l) nil)
